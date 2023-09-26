@@ -1,0 +1,111 @@
+import React from "react";
+import { render } from "react-dom";
+import { Rnd } from "react-rnd";
+
+const style = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  border: "solid 1px #ddd",
+  background: "#f0f0f0",
+};
+
+interface Iprops{
+}
+interface IState{
+    id: string,
+    width: string,
+    height: string,
+    x: number,
+    y: number,
+    background: string
+}
+
+
+export class CompClass extends React.Component<Iprops, IState> {
+    private rnd: React.RefObject<Rnd>;
+  constructor(props:Iprops) {
+    super(props);
+    this.rnd = React.createRef();
+  }
+  
+  
+
+  update() {
+    // console.log('this',this.rnd.current?.updateSize({width:500,height:500}))
+    this.rnd.current?.updateSize({ width: '500px', height: '500px' });
+  }
+
+  render() {
+    let {width, height, x, y} = this.state
+    var Users = [
+      {
+        id: '1',
+        width: '200px',
+        height: '200px',
+        x: 10,
+        y: 10,
+        background: 'black'
+      },
+      {
+        id: '2',
+        width: '200px',
+        height: '200px',
+        x: 30,
+        y: 30,
+        background: 'blue'
+      },
+      {
+        id:'3',
+        width: '200px',
+        height: '200px',
+        x: 40,
+        y: 50,
+        background: 'red'
+      }
+    ]
+    // var [rndObj, setRndObj] =useState<IState[]>(Users)
+
+    return (
+      // <Rnd
+      //   style={style}
+      //   bounds='window'
+      //   ref={this.rnd}
+      //   // size={{ width: '200px', height: '200px' }}
+      //   // position={{ x: this.state.x, y: this.state.y }}
+      //   onDragStop={(e, d) => {
+      //     this.setState({ x: d.x, y: d.y });
+      //     this.update()
+      //   }}
+      //   onResizeStop={(e, direction, ref, delta, position) => {
+      //     this.setState({
+      //       width: ref.style.width,
+      //       height: ref.style.height,
+      //       ...position
+      //     });
+      //   }}
+      // >
+      //   Rnd
+      // </Rnd>
+      <>
+      {Users.map((row, index) => (
+        <Rnd 
+        key={index}
+        bounds="window"
+        style={{background: row.background}}
+        
+        overflow='hidden'
+        onDragStop={(e, d) => {
+          console.log('xxxx', x, d.y)
+          console.log('xx',x,y)
+        }}
+        onDragStart={e=> e.stopPropagation()}
+        >
+          Rnd
+        </Rnd>
+        ))}
+      </>
+    );
+  }
+}
+
